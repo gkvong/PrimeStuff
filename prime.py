@@ -1,6 +1,6 @@
 import math as m
 
-def sieve(n):
+def SievePrimes(n):
     """
     Sieve of Eratosthenes.
     Input: integer n > 1.
@@ -16,7 +16,7 @@ def sieve(n):
         return integers
         print(integers)
 
-def pcount(x):
+def SievePrimeCount(x):
     """
     Input: integer n > 1.
     Output: number of primes less than or equal to n.
@@ -24,36 +24,29 @@ def pcount(x):
     return len(sieve(x))
     print(len(sieve(x)))
 
-def factor(x):
+def TrialFactor(x):
     """
     Prime factorisation/testing by trial division.
     Input: integer n > 1.
     Output: prime factorisation of number if it is not prime.
     """
-    n = x
-    factors = []                            #list of prime factors
-    q = 2                                   #first factor is 2
-    while x != 1:
-        if x%q == 0:                        
-            factors.append(q)               #if q divides x, then add it to the list of factors
-            x = x/q                         #divide down to find new factors
+    n = x 
+    factors = []                                            #list of prime factors
+    q = 2                                                   #first prime factor is 2
+    while n != 1:
+        if n%q == 0:                        
+            factors.append(q)                               #if q divides x, then add it to the list of factors
+            n = n/q                                         #divide down to find new factors
         else:
-            q += 1                          #if q does not divide x, then go to next number
-    if factors == [n]:                      #if x is only divisible by itself then it is prime
-        print(n, 'is prime.')
+            q += 1                                          #if q does not divide x, then go to next number
+    if factors == [x]:                                      #if x is only divisible by itself then it is prime
+        print(x, 'is prime.')
     else:
-        condense = []                       #condensed list of non-repeating factors
-        exponents = []                      #list of exponents of corresponding factors
-        i = 0
-        while i <= len(factors)-1:
-            condense.append(factors[i])     #add unique factors to list condensed list of factors
-            sup = factors.count(factors[i]) #count number of repeating factors
-            exponents.append(sup)           #add number to list of exponents
-            i = i + sup                     #skip over repeated factors in factor list
-        else:                               #print the prime factorisation of x
-            print(n, '= ' , end = '')
-            k = 0
-            while k < len(condense)-1:
-                print('{}^{}'.format(condense[k], exponents[k]), end = ' * ')
-                k += 1
-            print('{}^{}.'.format(condense[len(condense)-1], exponents[len(exponents)-1]))
+        condensed = list(set(factors))                      #condensed list of non-repeating factors
+        exponents = [factors.count(x) for x in condensed]   #list of exponents of corresponding factors
+        print(x, '= ' , end = '')                           #print the prime factorisation of x
+        k = 0
+        while k < len(condensed)-1:
+            print('{}^{}'.format(condensed[k], exponents[k]), end = ' * ')
+            k += 1
+        print('{}^{}.'.format(condensed[len(condensed)-1], exponents[len(exponents)-1]))
