@@ -49,4 +49,4 @@ def TrialFactor(x):
         while k < len(condensed)-1:
             print(f'{condensed[k]}^{exponents[k]}', end = ' * ')
             k += 1
-        print(f'{condensed[len(condensed)-1]}^{exponents[len(exponents)-1]}.')
+        print(f'{condensed[-1]}^{exponents[-1]}.')
