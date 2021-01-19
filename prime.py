@@ -21,8 +21,8 @@ def SievePrimeCount(x):
     Input: integer n > 1.
     Output: number of primes less than or equal to n.
     """
-    return len(sieve(x))
-    print(len(sieve(x)))
+    return len(SievePrimes(x))
+    print(len(SievePrimes(x)))
 
 def TrialFactor(x):
     """
@@ -30,7 +30,7 @@ def TrialFactor(x):
     Input: integer n > 1.
     Output: prime factorisation of number if it is not prime.
     """
-    n = x 
+    n = x
     factors = []                                            #list of prime factors
     q = 2                                                   #first prime factor is 2
     while n != 1:
@@ -47,6 +47,6 @@ def TrialFactor(x):
         print(x, '= ' , end = '')                           #print the prime factorisation of x
         k = 0
         while k < len(condensed)-1:
-            print('{}^{}'.format(condensed[k], exponents[k]), end = ' * ')
+            print(f'{condensed[k]}^{exponents[k]}', end = ' * ')
             k += 1
-        print('{}^{}.'.format(condensed[len(condensed)-1], exponents[len(exponents)-1]))
+        print(f'{condensed[len(condensed)-1]}^{exponents[len(exponents)-1]}.')
