@@ -1,20 +1,27 @@
 import math as m
+from datetime import datetime
 
-def SievePrimes(n):
+def era(n):
     """
     Sieve of Eratosthenes.
     Input: integer n > 1.
     Output: list of prime numbers from 2 to n.
     """
-    integers = list(range(2,n+1))
-    i=0
-    while integers[i] <= m.floor(n**0.5):
-            multiples = list(range(2*integers[i],n+1,integers[i]))
-            integers = [x for x in integers if x not in multiples]
-            i += 1
-    else:
-        return integers
-        print(integers)
+    start = datetime.now()
+    prime = [False, False] + [True]*(n-1)
+    for i in range(2, m.floor(m.sqrt(n))+1):
+        if prime[i]:
+            for j in range(i**2, n+1, i):
+                prime[j] = False
+
+    primes = []
+    for i in range(0, n+1):
+        if prime[i]:
+            primes.append(i)    
+
+    elapsed = datetime.now() - start
+    print(f"Time elapsed: {elapsed.total_seconds() * 1000.0:.2f} ms")
+    return primes
 
 def SievePrimeCount(x):
     """
