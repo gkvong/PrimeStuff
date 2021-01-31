@@ -1,9 +1,10 @@
 import math as m
 from datetime import datetime
 
-def era(n):
+def Eratosthenes(n: int) -> list:
     """
     Sieve of Eratosthenes.
+
     Input: integer n > 1.
     Output: list of prime numbers from 2 to n.
     """
@@ -14,22 +15,22 @@ def era(n):
             for j in range(i**2, n+1, i):
                 prime[j] = False
 
-    primes = []
+    prime_numbers = []
     for i in range(0, n+1):
         if prime[i]:
-            primes.append(i)    
+            prime_numbers.append(i)    
 
     elapsed = datetime.now() - start
-    print(f"Time elapsed: {elapsed.total_seconds() * 1000.0:.2f} ms")
-    return primes
+    print(f"Computation time: {elapsed.total_seconds() * 1000.0:.2f} ms")
+    return prime_numbers
 
-def SievePrimeCount(x):
-    """
-    Input: integer n > 1.
-    Output: number of primes less than or equal to n.
-    """
-    return len(SievePrimes(x))
-    print(len(SievePrimes(x)))
+def sieve(integer, sieve_type=0):
+    if sieve_type == 0:
+        return Eratosthenes(integer)
+    elif sieve_type == 1:
+        print('Sieve of Sundaram')
+    elif sieve_type == 2:
+        print('Sieve of Atkin')
 
 def TrialFactor(x):
     """
@@ -57,3 +58,19 @@ def TrialFactor(x):
             print(f'{condensed[k]}^{exponents[k]}', end = ' * ')
             k += 1
         print(f'{condensed[-1]}^{exponents[-1]}.')
+
+def trial_division(n: int) -> list:
+    a = []
+    while n % 2 == 0:
+        a.append(2)
+        n /= 2
+    f = 3
+    while f * f <= n:
+        if n % f == 0:
+            a.append(f)
+            n /= f
+        else:
+            f += 2
+    if n != 1: 
+        a.append(n)
+    return a
