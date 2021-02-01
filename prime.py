@@ -8,25 +8,26 @@ def Eratosthenes(n: int) -> list:
     Input: integer n > 1.
     Output: list of prime numbers from 2 to n.
     """
-    start = datetime.now()
-    prime = [False, False] + [True]*(n-1)
+    prime = [True]*(n+1)
     for i in range(2, m.floor(m.sqrt(n))+1):
         if prime[i]:
             for j in range(i**2, n+1, i):
                 prime[j] = False
 
     prime_numbers = []
-    for i in range(0, n+1):
+    for i in range(2, n+1):
         if prime[i]:
-            prime_numbers.append(i)    
-
-    elapsed = datetime.now() - start
-    print(f"Computation time: {elapsed.total_seconds() * 1000.0:.2f} ms")
+            prime_numbers.append(i)
     return prime_numbers
 
 def sieve(integer, sieve_type=0):
     if sieve_type == 0:
-        return Eratosthenes(integer)
+        start = datetime.now()
+        primes = Eratosthenes(integer)
+        end = datetime.now() - start
+        print(primes)
+        print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
+
     elif sieve_type == 1:
         print('Sieve of Sundaram')
     elif sieve_type == 2:
@@ -40,7 +41,7 @@ def TrialFactor(x):
     """
     n = x
     factors = []                                            #list of prime factors
-    q = 2                                                   #first prime factor is 2
+    q = 2                                                  #first prime factor is 2
     while n != 1:
         if n%q == 0:                        
             factors.append(q)                               #if q divides x, then add it to the list of factors
@@ -60,17 +61,36 @@ def TrialFactor(x):
         print(f'{condensed[-1]}^{exponents[-1]}.')
 
 def trial_division(n: int) -> list:
-    a = []
+    factors = []
     while n % 2 == 0:
-        a.append(2)
+        factors.append(2)
         n /= 2
     f = 3
     while f * f <= n:
         if n % f == 0:
-            a.append(f)
+            factors.append(f)
             n /= f
         else:
             f += 2
     if n != 1: 
-        a.append(n)
-    return a
+        factors.append(int(n))
+    return factors
+
+def factor(integer, method=0):
+    if method == 0:
+        start = datetime.now()
+        factors = trial_division(integer)
+        end = datetime.now() - start
+        print(factors)
+        print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
+    elif method == 1:
+        print('Fermat\'s factorization method')
+        
+    elif method == 2:
+        print('Pollard\'s rho algorithm')
+
+    elif method == 3:
+        print('Quadratic Sieve Method')
+
+    elif method == 4:
+        print('Shor\'s Algorithm')
