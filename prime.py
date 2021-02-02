@@ -25,40 +25,13 @@ def sieve(integer, sieve_type=0):
         start = datetime.now()
         primes = Eratosthenes(integer)
         end = datetime.now() - start
-        print(primes)
-        print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
-
     elif sieve_type == 1:
         print('Sieve of Sundaram')
     elif sieve_type == 2:
         print('Sieve of Atkin')
-
-def TrialFactor(x):
-    """
-    Prime factorisation/testing by trial division.
-    Input: integer n > 1.
-    Output: prime factorisation of number if it is not prime.
-    """
-    n = x
-    factors = []                                            #list of prime factors
-    q = 2                                                  #first prime factor is 2
-    while n != 1:
-        if n%q == 0:                        
-            factors.append(q)                               #if q divides x, then add it to the list of factors
-            n = n/q                                         #divide down to find new factors
-        else:
-            q += 1                                          #if q does not divide x, then go to next number
-    if factors == [x]:                                      #if x is only divisible by itself then it is prime
-        print(x, 'is prime.')
-    else:
-        condensed = list(set(factors))                      #condensed list of non-repeating factors
-        exponents = [factors.count(x) for x in condensed]   #list of exponents of corresponding factors
-        print(x, '= ' , end = '')                           #print the prime factorisation of x
-        k = 0
-        while k < len(condensed)-1:
-            print(f'{condensed[k]}^{exponents[k]}', end = ' * ')
-            k += 1
-        print(f'{condensed[-1]}^{exponents[-1]}.')
+    
+    print(primes)
+    print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
 
 def trial_division(n: int) -> list:
     factors = []
@@ -81,16 +54,25 @@ def factor(integer, method=0):
         start = datetime.now()
         factors = trial_division(integer)
         end = datetime.now() - start
-        print(factors)
-        print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
     elif method == 1:
         print('Fermat\'s factorization method')
-        
     elif method == 2:
         print('Pollard\'s rho algorithm')
-
     elif method == 3:
         print('Quadratic Sieve Method')
-
     elif method == 4:
         print('Shor\'s Algorithm')
+
+    if len(factors) == 1: 
+        print(integer, 'is prime.')
+    else:
+        condensed = list(set(factors))
+        exponents = [factors.count(x) for x in condensed]
+        print(integer, '= ' , end = '')
+        k = 0
+        while k < len(condensed)-1:
+            print(f'{condensed[k]}^{exponents[k]}', end = ' * ')
+            k += 1
+        print(f'{condensed[-1]}^{exponents[-1]}.')
+
+    print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
