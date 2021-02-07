@@ -73,7 +73,6 @@ def sieve(limit, sieve_type=1):
     '1' for Sieve of Eratosthenes,
     '2' for Sieve of Sundaram,
     '3' for Sieve of Atkin.
-    
     """
     if sieve_type == 1:
         start = datetime.now()
@@ -92,7 +91,7 @@ def sieve(limit, sieve_type=1):
     print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
 
 
-def trial_division(n: int) -> list:
+def Trial_division(n: int) -> list:
     """
     Trial division prime factorisation.
     """
@@ -111,38 +110,40 @@ def trial_division(n: int) -> list:
         factors.append(int(n))
     return factors
 
+def Fermat(n: int):
+    """
+    Fermat's factorisation method
+    """
+    t = m.ceil(m.sqrt(n))
+    s2 = (t**2 - n)
+    for t in range(t, n+1):
+        if s2 == m.isqrt(s2)**2:
+            return [int(t - m.sqrt(s2)), int(m.sqrt(s2) + t)]
+        else:
+            s2 += 2*t + 1
+            t += 1
+        if t == n+1:
+            return f"Can not express {n} as a difference of two squares."
+
 def factor(integer, method=1):
     """
-    Prime factorisation algorithms. Returns the prime factorisation of a number in exponential form.
+    Integer factorisation algorithms. Returns the prime factorisation of a number in exponential form.
     
     integer: number to prime factorise.
 
-    method: 1(default), 2 or 3. Specify the prime factorisation algorithm to use:
+    method: 1(default) or 2. Specify the prime factorisation algorithm to use:
     '1' for Trial division,
     '2' for Fermat's factorisation method.
-    '3' for Pollard's rho algorithm,
-    '4' for Quadratic sieve method,
-    '5' for Shor's algorithm.
     """
     if method == 1:
         start = datetime.now()
-        factors = trial_division(integer)
+        factors = Trial_division(integer)
         end = datetime.now() - start
     elif method == 2:
         start = datetime.now()
-        print('Fermat\'s factorization method')
-        end = datetime.now() - start
-    elif method == 3:
-        start = datetime.now()
-        print('Pollard\'s rho algorithm')
-        end = datetime.now() - start
-    elif method == 4:
-        start = datetime.now()
-        print('Quadratic Sieve Method')
-        end = datetime.now() - start
-    elif method == 5:
-        start = datetime.now()
-        print('Shor\'s Algorithm')
+        factors = Fermat(integer)
+        if type(factors) == str:
+            return print(factors)
         end = datetime.now() - start
 
     if len(factors) == 1: 
@@ -150,8 +151,7 @@ def factor(integer, method=1):
     else:
         factorise = dict()
         for i in factors:
-            factorise[i] = factorise.get(i ,0) + 1
-
+            factorise[i] = factorise.get(i, 0) + 1
         print(integer, '= ', end = '')
         for key, value in factorise.items():
             if key == list(factorise.keys())[-1]:
@@ -164,3 +164,72 @@ def factor(integer, method=1):
             else:
                 print(f'{key}^{value}', end = ' * ')
     print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
+
+
+def trialtest(n: int):
+    """
+    Primality test by trial division.
+
+    """
+    if n == 2:
+        return True
+    if n == 1:
+        return False
+    if n % 2 == 0:
+        return False
+    for i in range(3, int(m.sqrt(n)), 2):
+        if n % i == 0:
+            return False
+    return True
+
+def Lucas(n: int):
+    """
+    Lucas' primality test.
+    """
+    if n == 1:
+        return False
+    if n == 2:
+        return True
+    if n == 3:
+        return True
+    for a in range(2, n+1):
+        if m.gcd(a, n) != 1:
+            return False
+        if a**(n-1) % n != 1:
+            return False
+        for p in range(2, int(m.sqrt(n-1)+1)):
+            if (n-1) % p == 0:
+                if a**((n-1)/p) % n != 1:
+                    return True
+
+def prime(integer, test=1):
+    """
+    Primality tests. Returns if an integer is prime or not.
+
+    integer: number to prime test.
+
+    test: 1(default) or 2. Specify the primality test to use:
+    '1' for Trial division,
+    '2' for Lucas' primality test.
+    """
+    if test == 1:
+        start = datetime.now()
+        if trialtest(integer):
+            end = datetime.now() - start
+            print(f"{integer} is prime.")
+            print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
+        else:
+            end = datetime.now() - start
+            print(f"{integer} is not prime.")
+            print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
+            
+    if test == 2:
+        start = datetime.now()
+        if Lucas(integer):
+            end = datetime.now() - start
+            print(f"{integer} is prime.")
+            print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
+        else:
+            end = datetime.now() - start
+            print(f"{integer} is not prime.")
+            print(f"Computation time: {end.total_seconds() * 1000.0:.2f} ms")
